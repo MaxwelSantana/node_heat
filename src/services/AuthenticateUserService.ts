@@ -1,5 +1,5 @@
 import axios from 'axios';
-import prismaCliente from '../prisma';
+import prismaClient from '../prisma';
 import { sign } from 'jsonwebtoken';
 
 interface IAccessTokenResponse {
@@ -41,14 +41,14 @@ class AuthenticateUserService {
 
     const { login, id, avatar_url, name } = response.data;
 
-    let user = await prismaCliente.user.findFirst({
+    let user = await prismaClient.user.findFirst({
       where: {
         github_id: id,
       },
     });
 
     if (!user) {
-      user = await prismaCliente.user.create({
+      user = await prismaClient.user.create({
         data: { github_id: id, login, avatar_url, name },
       });
     }
